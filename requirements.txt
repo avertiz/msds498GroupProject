@@ -3,3 +3,10 @@ pytest
 pytest-cov
 requests
 pandas
+beautifulsoup4
+numpy
+python-craigslist
+geopy
+google-cloud-bigquery
+opentelemetry-api
+opentelemetry-instrumentation
