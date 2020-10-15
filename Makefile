@@ -1,6 +1,5 @@
-  
 setup:
-	python3 -m venv ~/.msds498
+	python3 -m venv ~/.msds498GroupProject
 
 install:
 	pip install --upgrade pip &&\
