@@ -127,4 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# secret file, DO NOT UPLOAD to any public repo
+debug-9527.json
+
+# Test and Dev files
 weather.ipynb
