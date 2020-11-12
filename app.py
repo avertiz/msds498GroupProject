@@ -15,6 +15,7 @@ app.layout = html.Div([
     
     html.H1("LandingSpot", style = {'text-align': 'center'}),
     html.H4("Where will you land?", style = {'text-align': 'center'}),
+    html.Br(),html.Br(),html.Br(),
 
     html.Label(["How many bedrooms do you need?",
         dcc.Dropdown(   id = 'bedrooms',
@@ -22,7 +23,7 @@ app.layout = html.Div([
                                     {'label': '2', 'value': 2},
                                     {'label': '3', 'value': 3},
                                     {'label': '4', 'value': 4}],
-                        style = {'width': '20%'}
+                        style = {'width': '23%'}
         )
     ]),
 
