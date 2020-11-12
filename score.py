@@ -63,22 +63,32 @@ def score_income(client):
     return(scores)
 
 ###### Rank Everything ######
-
-def combine_results(bedrooms, client):
-    rentals = score_rentals(bedrooms = bedrooms, client = client)
-    income = score_income(client = client)
-    data_frames = [rentals, income]
-    results = reduce(lambda left,right: pd.merge(left,right,on=['city_id'], how='outer'), data_frames)
+def get_city_names(client):
+    query = "SELECT city_id, FormattedName FROM `msds-498-group-project.landing_spot.cities`"
+    results = client.query(query).to_dataframe()
     return(results)
 
-def get_z_scores(bedrooms, client):
-    scores = combine_results(bedrooms = bedrooms, client = client)
-    cols = scores.columns
+def get_z_scores(df):
+    cols = df.columns
     z_scores = pd.DataFrame(columns = cols)
     for col in cols:
-        if col != 'city_id':
-            z_scores[col] = (scores[col] - scores[col].mean())/scores[col].std(ddof=0)
+        if col not in ['city_id', 'FormattedName']:
+            z_scores[col] = (df[col] - df[col].mean())/df[col].std(ddof=0)
         else:
-            z_scores[col] = scores[col]
+            z_scores[col] = df[col]
     return(z_scores)
 
+def sum_rows(df):
+    df['Score'] = df.drop(['city_id', 'FormattedName'], axis=1).sum(axis=1).round(3)
+    return(df)
+
+def output_table(bedrooms, client):    
+    names = get_city_names(client = client)
+    rentals = score_rentals(bedrooms = bedrooms, client = client)
+    income = score_income(client = client)
+    data_frames = [names, rentals, income]
+    results = reduce(lambda left,right: pd.merge(left,right,on=['city_id'], how='outer'), data_frames)
+    results = get_z_scores(df = results)
+    results = sum_rows(df = results)
+    results.sort_values(by=['Score'], inplace=True, ascending=False)
+    return(results[['FormattedName', 'Score']])
