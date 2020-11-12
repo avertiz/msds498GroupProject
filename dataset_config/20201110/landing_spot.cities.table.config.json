@@ -1,0 +1,43 @@
+{
+  "csvOptions": {
+    "allowJaggedRows": false,
+    "allowQuotedNewlines": false,
+    "encoding": "UTF-8",
+    "fieldDelimiter": ",",
+    "quote": "\"",
+    "skipLeadingRows": 0
+  },
+  "schema": {
+    "fields": [
+      {
+        "mode": "REQUIRED",
+        "name": "city_id",
+        "type": "INTEGER"
+      },
+      {
+        "mode": "REQUIRED",
+        "name": "city",
+        "type": "STRING"
+      },
+      {
+        "mode": "REQUIRED",
+        "name": "lat",
+        "type": "STRING"
+      },
+      {
+        "mode": "REQUIRED",
+        "name": "lon",
+        "type": "STRING"
+      },
+      {
+        "mode": "REQUIRED",
+        "name": "FormattedName",
+        "type": "STRING"
+      }
+    ]
+  },
+  "sourceFormat": "CSV",
+  "sourceUris": [
+    "gs://weather_msds-498-group-project/cities_lat_lon_20201110.csv"
+  ]
+}

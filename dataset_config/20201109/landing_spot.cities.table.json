@@ -1,0 +1,32 @@
+{
+  "creationTime": "1603848842751",
+  "etag": "MNp8VcGJtPJ6Cdra1r9+/g==",
+  "id": "msds-498-group-project:landing_spot.cities",
+  "kind": "bigquery#table",
+  "lastModifiedTime": "1603848842751",
+  "location": "US",
+  "numBytes": "197",
+  "numLongTermBytes": "0",
+  "numRows": "11",
+  "schema": {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "city_id",
+        "type": "INTEGER"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "city",
+        "type": "STRING"
+      }
+    ]
+  },
+  "selfLink": "https://bigquery.googleapis.com/bigquery/v2/projects/msds-498-group-project/datasets/landing_spot/tables/cities",
+  "tableReference": {
+    "datasetId": "landing_spot",
+    "projectId": "msds-498-group-project",
+    "tableId": "cities"
+  },
+  "type": "TABLE"
+}
