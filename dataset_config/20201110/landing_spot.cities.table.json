@@ -1,0 +1,9 @@
+{
+  "friendlyName": "MSDS 498 Group Project",
+  "id": "msds-498-group-project",
+  "kind": "bigquery#project",
+  "numericId": "329459317002",
+  "projectReference": {
+    "projectId": "msds-498-group-project"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "access": [
+    {
+      "role": "WRITER",
+      "specialGroup": "projectWriters"
+    },
+    {
+      "role": "OWNER",
+      "specialGroup": "projectOwners"
+    },
+    {
+      "role": "OWNER",
+      "userByEmail": "andre.vertiz@gmail.com"
+    },
+    {
+      "role": "READER",
+      "specialGroup": "projectReaders"
+    }
+  ],
+  "creationTime": "1602635731837",
+  "datasetReference": {
+    "datasetId": "landing_spot",
+    "projectId": "msds-498-group-project"
+  },
+  "etag": "4rmQ5SHfn1Vp77UwhbY00Q==",
+  "id": "msds-498-group-project:landing_spot",
+  "kind": "bigquery#dataset",
+  "lastModifiedTime": "1602635731837",
+  "location": "US",
+  "selfLink": "https://bigquery.googleapis.com/bigquery/v2/projects/msds-498-group-project/datasets/landing_spot"
+}
