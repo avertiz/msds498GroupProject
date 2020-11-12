@@ -15,3 +15,11 @@ print(data.head(10))
 data = Daily(['10637'], start = datetime(2018, 1, 1), end = datetime(2018, 12, 31))
 data = data.normalize().aggregate(freq = '1Q').fetch()
 data.head(10)
+
+def main():
+    print("To be constructed")
+    return None
+
+
+if __name__ == "__main__":
+    main()
