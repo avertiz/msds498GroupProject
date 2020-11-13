@@ -1,24 +1,39 @@
-from meteostat import Stations, Daily
-from datetime import datetime
+import pandas as pd
+from google.cloud import bigquery
+from core import get_raw_data, aggregate_data_by_season_year, aggregate_data_by_season, add_city
 
-# Get closest weather station to Vancouver, BC
-stations = Stations(lat = 49.2497, lon = -123.1193)
-station = stations.fetch(1)
+#client = bigquery.Client()
+client = bigquery.Client.from_service_account_json('debug-9527.json')
+project_id = 'msds-498-group-project'
 
-# Get daily data for 2018 at the selected weather station
-data = Daily(station, start = datetime(2018, 1, 1), end = datetime(2018, 12, 31))
-data = data.fetch()
+sql = """
+SELECT
+  city,
+  station
+FROM
+  `landing_spot.cities`
+  """
 
-# Plot line chart including average, minimum and maximum temperature
-print(data.head(10))
 
-data = Daily(['10637'], start = datetime(2018, 1, 1), end = datetime(2018, 12, 31))
-data = data.normalize().aggregate(freq = '1Q').fetch()
-data.head(10)
+def proc_city(city, station_id):
+    df = get_raw_data(station_id)
+    df = aggregate_data_by_season_year(df)
+    df = aggregate_data_by_season(df)
+    return add_city(city, df)
+
+
+def proc_cities(cities):
+    df = pd.DataFrame()
+    for row in cities:
+        _df = proc_city(row.city, row.station)
+        df = df.append(_df, ignore_index=True)
+    return df
+
 
 def main():
-    print("To be constructed")
-    return None
+    cities = client.query(sql, project=project_id)
+    data = proc_cities(cities)
+    data.to_csv('weather.csv', index=False)
 
 
 if __name__ == "__main__":
