@@ -5,7 +5,7 @@
     "encoding": "UTF-8",
     "fieldDelimiter": ",",
     "quote": "\"",
-    "skipLeadingRows": 0
+    "skipLeadingRows": 1
   },
   "schema": {
     "fields": [
@@ -22,11 +22,16 @@
       {
         "mode": "REQUIRED",
         "name": "lat",
-        "type": "STRING"
+        "type": "float"
       },
       {
         "mode": "REQUIRED",
         "name": "lon",
+        "type": "float"
+      },
+      {
+        "mode": "REQUIRED",
+        "name": "station",
         "type": "STRING"
       },
       {
@@ -38,6 +43,6 @@
   },
   "sourceFormat": "CSV",
   "sourceUris": [
-    "gs://weather_msds-498-group-project/cities_lat_lon_20201110.csv"
+    "gs://weather_msds-498-group-project/cities.csv"
   ]
 }
