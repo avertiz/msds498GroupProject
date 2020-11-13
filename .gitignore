@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# vscode config directory
+.vscode/
+
+# secret file, DO NOT UPLOAD to any public repo
+weather/debug-9527.json
+
+# Test and Dev files
+weather/weather.ipynb
