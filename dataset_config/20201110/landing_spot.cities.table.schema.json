@@ -12,12 +12,12 @@
   {
     "mode": "REQUIRED",
     "name": "lat",
-    "type": "STRING"
+    "type": "float"
   },
   {
     "mode": "REQUIRED",
     "name": "lon",
-    "type": "STRING"
+    "type": "float"
   },
   {
     "mode": "REQUIRED",
