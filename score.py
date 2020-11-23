@@ -139,6 +139,44 @@ def score_commute(client, preference):
     commute_data = get_commute(client = client, preference = preference)
     return(commute_data)
 
+
+def score_warmer(df, pref):
+    score = df['avg'] + .5 * df['min'] + .5 * df['max']
+    df['weather_score'] = score if pref == 'Warmer' else -score
+    return normalize_scores(df[['weather_score']])
+
+
+def score_weather(client=client, summer_pref='Cooler', winter_pref='Warmer'):
+    sql = """
+        SELECT
+            c.city_id,
+            season,
+            AVG(tavg) AS avg,
+            AVG(tmin) AS min,
+            AVG(tmax) AS max,
+            c.FormattedName
+        FROM
+            `msds-498-group-project.landing_spot.weather` w
+        INNER JOIN
+            `msds-498-group-project.landing_spot.cities` c
+        ON
+            w.city = c.city
+        WHERE
+            season IN ('Summer',
+                'Winter')
+        GROUP BY
+            c.city_id,
+            season,
+            c.FormattedName
+    """
+    df = client.query(sql).to_dataframe()
+    summer_df = df[df.season == 'Summer'].set_index('city_id')
+    winter_df = df[df.season == 'Winter'].set_index('city_id')
+
+    score = score_warmer(summer_df, summer_pref) + score_warmer(winter_df, winter_pref)
+    return score.reset_index()
+
+
 ###### Rank Everything ######
 
 def get_city_names(client):
