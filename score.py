@@ -142,8 +142,8 @@ def score_commute(client, preference):
 
 def score_warmer(df, pref):
     score = df['avg'] + .5 * df['min'] + .5 * df['max']
-    df['weather_score'] = score if pref == 'Warmer' else -score
-    return normalize_scores(df[['weather_score']])
+    df['weather'] = score if pref == 'Warmer' else -score
+    return normalize_scores(df[['weather']])
 
 
 def score_weather(client=client, summer_pref='Cooler', winter_pref='Warmer'):
@@ -210,14 +210,15 @@ def sum_rows(df):
     df['Score'] = df.drop(['city_id', 'FormattedName'], axis=1).sum(axis=1).round(3)
     return(df)
 
-def output_table(client, bedrooms, div_preference, ed_preference, comm_preference, first, second, third):    
+def output_table(client, bedrooms, div_preference, ed_preference, comm_preference, summer_pref, winter_pref, first, second, third):    
     names = get_city_names(client = client)
     rentals = score_rentals(bedrooms = bedrooms, client = client)
     income = score_income(client = client)
     diversity = score_diversity(client = client, preference = div_preference)
     education = score_education(client = client, preference = ed_preference)
     commute = score_commute(client = client, preference = comm_preference)
-    data_frames = [names, rentals, income, diversity, education, commute]
+    weather = score_weather(client=client, summer_pref=summer_pref, winter_pref=winter_pref)
+    data_frames = [names, rentals, income, diversity, education, commute, weather]
     results = reduce(lambda left,right: pd.merge(left,right,on=['city_id'], how='outer'), data_frames)
     results = normalize_scores(df = results)
     results = add_weights(df = results, first = first, second = second, third = third)
