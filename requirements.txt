@@ -21,3 +21,4 @@ google-cloud-datastore
 google-cloud-storage
 pyarrow
 grpcio
+meteostat==0.3.0
