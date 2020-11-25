@@ -64,8 +64,8 @@ app.layout = html.Div([
         html.Div([
             html.Label(["Do you prefer a Warmer or Cooler Summer?",
                 dcc.Dropdown(   id = 'summer',
-                                options = [ {'label': 'Cooler', 'value': 'Cooler'},
-                                            {'label': 'Warmer', 'value': 'Warmer'}],
+                                options = [ {'label': 'Warmer', 'value': 'Warmer'},
+                                            {'label': 'Cooler', 'value': 'Cooler'}],
                                 style = dropdown_style
                 )
             ])
@@ -104,7 +104,7 @@ app.layout = html.Div([
             ])
         ], style = {'width': '100%', 'padding': '5px'})
 
-    ], style = {'width': '30%', 'border' : '2px solid DarkSlateGray'}),
+    ], style = {'width': '30%', 'border' : '2px solid DarkSlateGray', 'display': 'inline-block'}),
 
     # Ranking
     html.Div([
@@ -131,23 +131,29 @@ app.layout = html.Div([
             )
         ], style = {'padding': '5px'})
 
-    ], style = {'width': '30%', 'border' : '2px DodgerBlue solid'}),    
+    ], style = {'width': '30%', 'border' : '2px DodgerBlue solid', 'display': 'inline-block'}),
+
+    html.Div([
+    dcc.Loading(id = 'results_table_load', 
+                type = 'circle',
+                children = [
+                    html.Div([html.H4(id = 'results_table_header'), dash_table.DataTable(id='results_table')], 
+                             style = {'width': '50%', 'horizontalAlign': 'top'})
+                            ]
+    )], style={'width': '30%', 'display': 'inline-block', 'float' : 'right', 'horizontalAlign': 'top'}),
 
     html.Div([
         html.Button('Submit', 
                 id='submit-val', 
                 n_clicks = 0)
     ], style={'horizontalAlign': 'middle', 'display':'flex', 'padding': '5px'}),
-
     html.Br(),
-    
-    dcc.Loading(id = 'results_table_load', 
-                type = 'circle',
-                children = [
-                    html.Div([html.H4(id = 'results_table_header'), dash_table.DataTable(id='results_table')], 
-                             style = {'width': '15%'})
-                            ]
-    ),
+
+    html.P("""
+    *Your LandingSpot was chosen by aggregating data from various sources and giving them weight based on your preferences. 
+    A city can score between 0 and 13.25.
+    There is also other data being looked at in the background, such as crime data, that may impact a city's score.
+    """),
 
     html.Br(),html.Br(),html.Br(),
 
@@ -158,8 +164,7 @@ app.layout = html.Div([
 @app.callback(
     [Output(component_id='results_table_header', component_property='children'),
      Output(component_id='results_table', component_property='data'),
-     Output(component_id='results_table', component_property='columns'),
-     Output(component_id='results_table', component_property='style_table')],
+     Output(component_id='results_table', component_property='columns')],
     [Input(component_id = 'submit-val', component_property = 'n_clicks')],
     [State(component_id='bedrooms', component_property='value'),
      State(component_id = 'commute', component_property = 'value'),
@@ -172,14 +177,13 @@ app.layout = html.Div([
      State(component_id = '3rd', component_property = 'value')]
 )
 def show_results_table(n_clicks, beds, commute, summer, winter, diversity, education, first, second, third):
-    style_table = {'overflowX': 'scroll'}
     if n_clicks == 0:
         raise PreventUpdate
     elif beds is None or commute is None or summer is None or winter is None or diversity is None or education is None or first is None or second is None or third is None:
         header = "Please fill out the entire form"
         df = pd.DataFrame()
         cols = []
-        return(header, df.to_dict('records'), cols, style_table)
+        return(header, df.to_dict('records'), cols)
     else:
         df = score.output_table(client = client, 
                                 bedrooms = beds, 
@@ -194,7 +198,7 @@ def show_results_table(n_clicks, beds, commute, summer, winter, diversity, educa
         cols = [{"name": 'City', "id": 'FormattedName'},
                 {"name": 'Score', "id": 'Score'}]
         header = "Looks like you're landing in {}!".format(df.iloc[0]['FormattedName'])
-        return(header, df.to_dict('records'), cols, style_table)
+        return(header, df.to_dict('records'), cols)
 
 if __name__ == '__main__':
-    app.run_server(debug = True)
+    app.run_server(debug=True)

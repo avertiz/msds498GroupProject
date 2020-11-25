@@ -139,7 +139,7 @@ def score_commute(client, preference):
     commute_data = get_commute(client = client, preference = preference)
     return(commute_data)
 
-
+# weather
 def score_warmer(df, pref):
     score = df['avg'] + .5 * df['min'] + .5 * df['max']
     df['weather'] = score if pref == 'Warmer' else -score

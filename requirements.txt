@@ -5,6 +5,7 @@ requests
 pandas
 beautifulsoup4
 numpy
+gunicorn
 python-craigslist
 opentelemetry-api
 opentelemetry-instrumentation
