@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from google.cloud import bigquery
 import score
+import plots
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/dZVMbK.css']
 
@@ -104,7 +105,7 @@ app.layout = html.Div([
             ])
         ], style = {'width': '100%', 'padding': '5px'})
 
-    ], style = {'width': '30%', 'border' : '2px solid DarkSlateGray', 'display': 'inline-block'}),
+    ], style = {'width': '30%', 'border' : '1px solid DarkSlateGray', 'display': 'inline-block'}),
 
     # Ranking
     html.Div([
@@ -131,33 +132,46 @@ app.layout = html.Div([
             )
         ], style = {'padding': '5px'})
 
-    ], style = {'width': '30%', 'border' : '2px DodgerBlue solid', 'display': 'inline-block'}),
+    ], style = {'width': '30%', 'border' : '1px DodgerBlue solid', 'display': 'inline-block'}),
 
+    # Results Table
     html.Div([
-    dcc.Loading(id = 'results_table_load', 
-                type = 'circle',
-                children = [
-                    html.Div([html.H4(id = 'results_table_header'), dash_table.DataTable(id='results_table')], 
-                             style = {'width': '50%', 'horizontalAlign': 'top'})
-                            ]
-    )], style={'width': '30%', 'display': 'inline-block', 'float' : 'right', 'horizontalAlign': 'top'}),
+        dcc.Loading(id = 'results_table_load', 
+                    type = 'circle',
+                    children = [
+                        html.Div([html.H4(id = 'results_table_header'), dash_table.DataTable(id='results_table')], 
+                                style = {'width': '50%', 'horizontalAlign': 'top'})
+                                ]
+        )
+    ], style={'width': '30%', 'display': 'inline-block', 'float' : 'right', 'horizontalAlign': 'top'}),
 
+    # Submit Button
     html.Div([
         html.Button('Submit', 
                 id='submit-val', 
                 n_clicks = 0)
     ], style={'horizontalAlign': 'middle', 'display':'flex', 'padding': '5px'}),
+    
     html.Br(),
-
     html.P("""
-    *Your LandingSpot was chosen by aggregating data from various sources and giving them weight based on your preferences. 
+    *Your LandingSpot was chosen by aggregating data from various sources and giving them weight based on your preferences.\n
     A city can score between 0 and 13.25.
     There is also other data being looked at in the background, such as crime data, that may impact a city's score.
     """),
+    html.Hr(),
 
-    html.Br(),html.Br(),html.Br(),
+    html.Div(
+        dcc.Graph(figure=plots.income_plot(client = client))
+    ),
 
-    html.Footer("Sources:")
+    html.Br(),
+
+    html.Footer("Sources:"),
+    html.A("data.census.gov", href='https://data.census.gov', target="_blank"), html.Br(),
+    html.A("crime-data-explorer.fr.cloud.gov", href='https://crime-data-explorer.fr.cloud.gov', target="_blank"), html.Br(),
+    html.A("meteostat.net", href='https://meteostat.net', target="_blank"), html.Br(),
+    html.A("craigslist.org", href='https://craigslist.org', target="_blank"), html.Br(),
+    html.A("irs.gov/statistics/soi-tax-stats-individual-income-tax-statistics-2018-zip-code-data-soi", href='https://www.irs.gov/statistics/soi-tax-stats-individual-income-tax-statistics-2018-zip-code-data-soi', target="_blank")
 
 ])
 
