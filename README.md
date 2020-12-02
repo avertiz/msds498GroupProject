@@ -2,7 +2,7 @@
 This is the code repository for the capstone group project for MSDS 498
 The project was built on the Google Cloud Platform, however, much of this coud is platform-agnostic.
 
-## Here is an overview of what each file accomplished
+## Here is an overview of what each file accomplishes
 #### requirements.txt
   * Packages needed for this project
 #### Makefile
