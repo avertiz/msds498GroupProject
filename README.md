@@ -7,12 +7,12 @@ The project was built on the Google Cloud Platform, however, much of this coud i
   * Packages needed for this project
 #### Makefile
   * Basic scoffolding for environment setup and package installation
-#### test.py
+#### `test.py`
   * script for testing
-#### etl.py
+#### `etl.py`
   * This script scrapes cragslist for a given site (city)
   * Things needed:
-      * A Google BigQuery table with columns "id", "repost_of", "name", "url",
+      * A Google BigQuery table with columns `"id", "repost_of", "name", "url",
                          "create_date",
                          "last_updated",
                          "price",
@@ -21,19 +21,28 @@ The project was built on the Google Cloud Platform, however, much of this coud i
                          "longitude",
                          "site",
                          "bedrooms",
-                         "square_feet"
-      * A site to scrape, a category, and possibly an area. For example, site = 'chicago', category = 'apa', and area = 'chc' would scrape https://chicago.craigslist.org/d/apartments-housing-for-rent/search/chc/apa
-#### weather.py
-  * Wei can you help me here???
-#### score.py
+                         "square_feet"`
+      * A site to scrape, a category, and possibly an area. For example, `site = 'chicago', category = 'apa', and area = 'chc'` would scrape https://chicago.craigslist.org/d/apartments-housing-for-rent/search/chc/apa
+#### `weather.py`
+* Using meteostat python library to gether weather data as we need
+* `core.py`
+  * get weather station IDs for each city based on latitude and longtitude
+  * pull weather data using `meteostat`
+  * aggregate weather data by meteorology season Dec 09 ~ Nov 19
+* `weather.py`
+    * Connect with BigQuery to get city info
+    * call `core.py` to get weather data and save it to `weather.csv`
+* `upload.sh`
+    * simple shell script to upload `weather.csv` to cloud storage and then load it to BigQuery from there
+#### `score.py`
   * This gathers all data from various sources and scores how well each city does relative to the other cities
   * It is what ultimately generates the recommendation of city to land in
-#### plots.py
+#### `plots.py`
   * Plots that the are used by the app
-#### app.py
+#### `app.py`
   * The script that generated the web app.
   * This is run on the Dash framework
-#### app.yaml
+#### `app.yaml`
   * basic yaml file that Google App Engine needs to deploy the app
   
 #### Here are the cloud services that were used to create this app:
