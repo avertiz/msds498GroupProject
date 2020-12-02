@@ -24,16 +24,16 @@ The project was built on the Google Cloud Platform, however, much of this coud i
                          "square_feet"`
       * A site to scrape, a category, and possibly an area. For example, `site = 'chicago', category = 'apa', and area = 'chc'` would scrape https://chicago.craigslist.org/d/apartments-housing-for-rent/search/chc/apa
 #### `weather.py`
-* Using meteostat python library to gether weather data as we need
+* Using meteostat python library to gather weather data
 * `core.py`
   * get weather station IDs for each city based on latitude and longtitude
   * pull weather data using `meteostat`
-  * aggregate weather data by meteorology season Dec 09 ~ Nov 19
+  * aggregate weather data by meteorology season for Dec 09 ~ Nov 19
 * `weather.py`
-    * Connect with BigQuery to get city info
+    * Connect to BigQuery to get city info
     * call `core.py` to get weather data and save it to `weather.csv`
 * `upload.sh`
-    * simple shell script to upload `weather.csv` to cloud storage and then load it to BigQuery from there
+    * Upload `weather.csv` to cloud storage and then load it to BigQuery from there
 #### `score.py`
   * This gathers all data from various sources and scores how well each city does relative to the other cities
   * It is what ultimately generates the recommendation of city to land in
