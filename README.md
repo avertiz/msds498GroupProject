@@ -2,6 +2,14 @@
 This is the code repository for the capstone group project for MSDS 498
 The project was built on the Google Cloud Platform, however, much of this coud is platform-agnostic.
 
+Motivation: Moving is a very costly affair - impacts the future earnings and the quality of life. COVID and the workplace transitions are fueling the migratory nature of humans. New York City saw 110K more people leaving the city during COVID than last year. People struggle with 15+ data-intensive factors
+
+Solution: Landing Spot - an interactive web app that collects high quality data , runs a prediction model on user choices and ranks the best fit among top 11 cities. Have a safe flight !
+
+
+* Link to App: https://msds-498-group-project.uc.r.appspot.com/
+* Link to Video: https://youtu.be/0RRbOjq1ZpM
+
 ## Here is an overview of what each file accomplishes
 #### requirements.txt
   * Packages needed for this project
